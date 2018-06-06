@@ -21,6 +21,35 @@ func tokenize(string text: String, using unit: NLTokenUnit) -> [String: NLTokeni
     return tokensAndAttributes
 }
 
+func determinePartsofSpeech(of text: String, with tagSchemes: [NLTagScheme], and tagOptions: NLTagger.Options) -> [String: String] {
+    let tagger = NLTagger(tagSchemes: tagSchemes)
+    tagger.string = text
+    let options = tagOptions
+    var dict = [String: String]()
+    tagger.enumerateTags(in: text.startIndex..<text.endIndex, unit: .word, scheme: tagSchemes.first!, options: options) { tag, tokenRange in
+        if let tag = tag {
+            dict[tag.rawValue] = String(text[tokenRange])
+        }
+        return true
+    }
+    return dict
+}
+
+func namedEntity(in text: String, with tagSchemes: [NLTagScheme], tagOptions: NLTagger.Options, and tags: [NLTag]) -> [String: String] {
+    let tagger = NLTagger(tagSchemes: tagSchemes)
+    tagger.string = text
+    let options = tagOptions
+    let tags = tags
+    var dict = [String: String]()
+    tagger.enumerateTags(in: text.startIndex..<text.endIndex, unit: .word, scheme: tagSchemes.first!, options: options) { tag, tokenRange in
+        if let tag = tag, tags.contains(tag) {
+            dict[tag.rawValue] = String(text[tokenRange])
+        }
+        return true
+    }
+    return dict
+}
+
 findDominantlanguage(for: text)
 tokenize(string: text, using: .word)
 

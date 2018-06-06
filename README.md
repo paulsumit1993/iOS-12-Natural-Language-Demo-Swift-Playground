@@ -3,3 +3,5 @@
 The playground demos how easily one can use the new Natural Language APIs on iOS 12 and macOS 10.14 to determine the language of a given string as well as tokenize the string.
 
 [Natural Language](https://developer.apple.com/documentation/naturallanguage)
+
+[Introducing Natural Language Framework - WWDC2018](https://developer.apple.com/videos/play/wwdc2018/713/)
